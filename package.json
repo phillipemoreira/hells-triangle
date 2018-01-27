@@ -4,7 +4,7 @@
   "description": "Hell's triangle solution",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "jest index.test.js"
   },
   "repository": {
     "type": "git",
