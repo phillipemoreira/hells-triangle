@@ -4,7 +4,7 @@
   "description": "Hell's triangle solution",
   "main": "index.js",
   "scripts": {
-    "test": "eslint src --fix && jest index.test.js"
+    "test": "eslint src --fix && jest --coverage index.test.js"
   },
   "repository": {
     "type": "git",
