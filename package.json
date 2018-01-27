@@ -1,0 +1,22 @@
+{
+  "name": "hells-triangle",
+  "version": "0.0.1",
+  "description": "Hell's triangle solution",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phillipemoreira/hells-triangle.git"
+  },
+  "author": "Phillipe Moreira",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phillipemoreira/hells-triangle/issues"
+  },
+  "homepage": "https://github.com/phillipemoreira/hells-triangle#readme",
+  "devDependencies": {
+    "jest": "^22.1.4"
+  }
+}
