@@ -41,10 +41,9 @@ const updateDistanceOfChildren = (currentLine, fatherIndex, maxDistance, triangl
   }
 
   // Since it is a triangle, alwasy two children
-
-  // Left child
   const fatherMax = maxDistance[currentLine][fatherIndex];
 
+  // Left child
   const leftNewCalc = fatherMax + triangle[currentLine + 1][fatherIndex];
   if (leftNewCalc > maxDistance[currentLine + 1][fatherIndex]) {
       maxDistance[currentLine + 1][fatherIndex] = leftNewCalc;
@@ -68,7 +67,7 @@ const calculate = (triangle = []) => {
   const closed = buildAuxiliartyArray(triangle.length);
   const maxDistance = buildAuxiliartyArray(triangle.length);
 
-  // First node does not have to be calculated, it is it's value itself.
+  // First node does not have to be calculated, its max value is itself.
   maxDistance[0][0] = triangle[0][0];
 
   // Since we know first node's value, it can start at second line
@@ -81,7 +80,7 @@ const calculate = (triangle = []) => {
   while (keepOnGoing === true) {
     keepOnGoing = false;
 
-    // Opposite of Dijsktra algorithm, we ge the node wifh the longgest path so far.
+    // Opposite of Dijsktra algorithm, we ge the node with the longgest path so far.
     const currentNodeIndex = findOpenedNodeWithBiggestMax(
       maxDistance[currentLine],
       closed[currentLine]
