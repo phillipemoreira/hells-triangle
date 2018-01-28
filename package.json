@@ -4,6 +4,7 @@
   "description": "Hell's triangle solution",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src --fix",
     "test": "eslint src --fix && jest --coverage index.test.js",
     "test:watch": "jest --watch index.test.js"
   },
