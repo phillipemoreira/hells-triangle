@@ -5,6 +5,7 @@ describe("CalculateMaxTotal", () => {
     expect(calculateMaxTotal()).toEqual(0);
   });
 
+
   it("initial test case", () => {
     const triangle = [
       [6],
@@ -16,6 +17,7 @@ describe("CalculateMaxTotal", () => {
     expect(calculateMaxTotal(triangle)).toEqual(26);
   });
 
+
   it("when following the local max leads to the global max", () => {
     const triangle = [
       [3],
@@ -25,6 +27,7 @@ describe("CalculateMaxTotal", () => {
 
     expect(calculateMaxTotal(triangle)).toEqual(19);
   });
+
 
   it("when following the local max does not lead to the global max", () => {
     const triangle = [
