@@ -5,7 +5,6 @@ describe("CalculateMaxTotal", () => {
     expect(calculateMaxTotal()).toEqual(0);
   });
 
-
   it("initial test case", () => {
     const triangle = [
       [6],
@@ -54,14 +53,10 @@ describe("CalculateMaxTotal", () => {
     expect(calculateMaxTotal(triangle)).toEqual(-6);
   });
 
-  it("when triangle is incomplete", () => {
-    const triangle = [
-      [1],
-      [2, 3],
-      [4]
-    ];
+  it("when single non numeric element", () => {
+    const triangle = [["b"]];
 
-    expect(() => calculateMaxTotal(triangle)).toThrowError("Incomplete triangle.");
+    expect(() => calculateMaxTotal(triangle)).toThrowError("All triangle elements must be numeric.");
   });
 
   it("when first triangle element is not numeric", () => {
@@ -82,5 +77,35 @@ describe("CalculateMaxTotal", () => {
     ];
 
     expect(() => calculateMaxTotal(triangle)).toThrowError("All triangle elements must be numeric.");
+  });
+
+  it("when triangle is incomplete", () => {
+    const triangle = [
+      [1],
+      [2, 3],
+      [4]
+    ];
+
+    expect(() => calculateMaxTotal(triangle)).toThrowError("Incomplete triangle.");
+  });
+
+  it("when first triangle line has more than one element", () => {
+    const triangle = [
+      [1, 2, 3],
+      [2, 4],
+      [4, 5, 6]
+    ];
+
+    expect(() => calculateMaxTotal(triangle)).toThrowError("Wrong triangle structure.");
+  });
+
+  it("when any of the lines have more elements than they should", () => {
+    const triangle = [
+      [1],
+      [2, 4],
+      [4, 5, 6, 8]
+    ];
+
+    expect(() => calculateMaxTotal(triangle)).toThrowError("Wrong triangle structure.");
   });
 });

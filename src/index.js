@@ -8,6 +8,12 @@ const validateNode = (element) => {
   }
 }
 
+const validateLine = (line, numberOfElements) => {
+  if (line.length !== numberOfElements) {
+    throw new Error("Wrong triangle structure.");
+  }
+}
+
 const findOpenedNodeWithBiggestMax = (lineToLookAt, closedNodesAtLine) => {
   let nodeIndex = null;
   let localMax = null;
@@ -93,6 +99,7 @@ const calculate = (triangle = []) => {
    * by checking every single one of them before, I would increase the complexity
    * for the average case.
    */
+  validateLine(triangle[0], 1);
   validateNode(triangle[0][0]);
 
   // If it is a triangle with a single element, just return it.
@@ -135,6 +142,7 @@ const calculate = (triangle = []) => {
 
       // If the line is completely calculated.
       if (shouldCloseLine(currentLine, closed)) {
+        validateLine(triangle[currentLine], currentLine + 1);
         if (currentLine < triangle.length - 1) {
           currentLine += 1;
         }
