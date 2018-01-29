@@ -7,7 +7,7 @@ const findOpenedNodeWithBiggestMax = (lineToLookAt, closedNodesAtLine) => {
   // Iterate line.
   for (let i = 0; i < lineToLookAt.length; i += 1) {
     // Check only opened nodes
-    if (closedNodesAtLine[i] === 0) {
+    if (closedNodesAtLine[i] === null) {
       // If node max distance is bigger than local max, use it as of now.
       if (localMax === null || lineToLookAt[i] > localMax) {
         localMax = lineToLookAt[i];
@@ -26,8 +26,8 @@ const closeNode = (nodeIndex, currentLine, closed) => {
 const shouldCloseLine = (currentLine, closed) => {
   let result = true;
 
-  for (let i = 0; i < currentLine; i += 1) {
-    if (closed[currentLine][i] === 0) {
+  for (let i = 0; i <= currentLine; i += 1) {
+    if (closed[currentLine][i] === null) {
       result = false;
     }
   }
@@ -45,13 +45,25 @@ const updateDistanceOfChildren = (currentLine, fatherIndex, maxDistance, triangl
 
   // Left child
   const leftNewCalc = fatherMax + triangle[currentLine + 1][fatherIndex];
-  if (leftNewCalc > maxDistance[currentLine + 1][fatherIndex]) {
+
+  /*
+   * Nullcheck is because the arrays are null inititialized,
+   * they cannot be 0 because we support negative number
+   */
+  if (maxDistance[currentLine + 1][fatherIndex] === null ||
+    leftNewCalc > maxDistance[currentLine + 1][fatherIndex]) {
       maxDistance[currentLine + 1][fatherIndex] = leftNewCalc;
   }
 
   // Right child.
   const rightNewCalc = fatherMax + triangle[currentLine + 1][fatherIndex + 1];
-  if (rightNewCalc > maxDistance[currentLine + 1][fatherIndex + 1]) {
+
+  /*
+   * Nullcheck is because the arrays are null inititialized,
+   * they cannot be 0 because we support negative number
+   */
+  if (maxDistance[currentLine + 1][fatherIndex + 1] === null ||
+    rightNewCalc > maxDistance[currentLine + 1][fatherIndex + 1]) {
       maxDistance[currentLine + 1][fatherIndex + 1] = rightNewCalc;
   }
 

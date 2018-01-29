@@ -38,4 +38,24 @@ describe("CalculateMaxTotal", () => {
 
     expect(calculateMaxTotal(triangle)).toEqual(13);
   });
+
+  it("when negative numbers", () => {
+    const triangle = [
+      [-1],
+      [-2, -3],
+      [-4, -7, -2]
+    ];
+
+    expect(calculateMaxTotal(triangle)).toEqual(-6);
+  });
+
+  it("when triangle is incomplete", () => {
+    const triangle = [
+      [1],
+      [2, 3],
+      [4]
+    ];
+
+    expect(calculateMaxTotal(triangle)).toEqual(7);
+  });
 });

@@ -5,7 +5,7 @@ module.exports = {
     for (let i = 0; i < lines; i += 1) {
         result[i] = [];
         for (let j = 0; j <= i; j += 1) {
-        result[i][j] = 0;
+        result[i][j] = null;
         }
     }
 
