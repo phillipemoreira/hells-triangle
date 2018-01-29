@@ -109,6 +109,17 @@ describe("CalculateMaxTotal", () => {
     expect(() => calculateMaxTotal(triangle)).toThrowError("Wrong triangle structure.");
   });
 
+  it("when decimal values", () => {
+    const triangle = [
+      [6],
+      [3, 5],
+      [9, 7.5, 1],
+      [4, 6, 8, 4]
+    ];
+
+    expect(calculateMaxTotal(triangle)).toEqual(26.5);
+  });
+
   it("when a bigger scenario", () => {
     const triangle = [
       [1],
