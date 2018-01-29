@@ -1,5 +1,13 @@
 const {buildAuxiliartyArray, findMax} = require("./utils");
 
+const validateNode = (element) => {
+  if (!element) {
+    throw new Error("Incomplete triangle.");
+  } else if (typeof element !== "number") {
+    throw new Error("All triangle elements must be numeric.");
+  }
+}
+
 const findOpenedNodeWithBiggestMax = (lineToLookAt, closedNodesAtLine) => {
   let nodeIndex = null;
   let localMax = null;
@@ -40,11 +48,13 @@ const updateDistanceOfChildren = (currentLine, fatherIndex, maxDistance, triangl
     return null;
   }
 
-  // Since it is a triangle, alwasy two children
+  // Since it is a triangle, always two children
   const fatherMax = maxDistance[currentLine][fatherIndex];
 
-  // Left child
-  const leftNewCalc = fatherMax + triangle[currentLine + 1][fatherIndex];
+  // >>>>>LEFT CHILD.
+  const left = triangle[currentLine + 1][fatherIndex];
+  validateNode(left);
+  const leftNewCalc = fatherMax + left;
 
   /*
    * Nullcheck is because the arrays are null inititialized,
@@ -55,7 +65,9 @@ const updateDistanceOfChildren = (currentLine, fatherIndex, maxDistance, triangl
       maxDistance[currentLine + 1][fatherIndex] = leftNewCalc;
   }
 
-  // Right child.
+  // >>>>>RIGHT CHILD.
+  const right = triangle[currentLine + 1][fatherIndex + 1];
+  validateNode(right);
   const rightNewCalc = fatherMax + triangle[currentLine + 1][fatherIndex + 1];
 
   /*
@@ -73,6 +85,19 @@ const updateDistanceOfChildren = (currentLine, fatherIndex, maxDistance, triangl
 const calculate = (triangle = []) => {
   if (triangle.length === 0) {
     return 0;
+  }
+
+  /*
+   * The reason I do not check every triangle element before executing any code
+   * is that in the average scenario, it is expected that all elements are numeric,
+   * by checking every single one of them before, I would increase the complexity
+   * for the average case.
+   */
+  validateNode(triangle[0][0]);
+
+  // If it is a triangle with a single element, just return it.
+  if (triangle.length === 1) {
+    return triangle[0][0];
   }
 
   // Auxiliary data structures.

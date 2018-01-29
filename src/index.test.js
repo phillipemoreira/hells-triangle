@@ -17,6 +17,11 @@ describe("CalculateMaxTotal", () => {
     expect(calculateMaxTotal(triangle)).toEqual(26);
   });
 
+  it("when triangle is one line only", () => {
+    const triangle = [[6]];
+
+    expect(calculateMaxTotal(triangle)).toEqual(6);
+  });
 
   it("when following the local max leads to the global max", () => {
     const triangle = [
@@ -56,6 +61,26 @@ describe("CalculateMaxTotal", () => {
       [4]
     ];
 
-    expect(calculateMaxTotal(triangle)).toEqual(7);
+    expect(() => calculateMaxTotal(triangle)).toThrowError("Incomplete triangle.");
+  });
+
+  it("when first triangle element is not numeric", () => {
+    const triangle = [
+      ["b"],
+      [2, "a"],
+      [4, 5, 6]
+    ];
+
+    expect(() => calculateMaxTotal(triangle)).toThrowError("All triangle elements must be numeric.");
+  });
+
+  it("when any of the triangle elements is not numeric", () => {
+    const triangle = [
+      [5],
+      [2, "a"],
+      [4, 5, 6]
+    ];
+
+    expect(() => calculateMaxTotal(triangle)).toThrowError("All triangle elements must be numeric.");
   });
 });
