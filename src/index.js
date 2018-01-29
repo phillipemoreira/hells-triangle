@@ -1,5 +1,19 @@
 const {buildAuxiliartyArray, findMax} = require("./utils");
 
+const validateNode = (element) => {
+  if (!element) {
+    throw new Error("Incomplete triangle.");
+  } else if (typeof element !== "number") {
+    throw new Error("All triangle elements must be numeric.");
+  }
+}
+
+const validateLine = (line, numberOfElements) => {
+  if (line.length !== numberOfElements) {
+    throw new Error("Wrong triangle structure.");
+  }
+}
+
 const findOpenedNodeWithBiggestMax = (lineToLookAt, closedNodesAtLine) => {
   let nodeIndex = null;
   let localMax = null;
@@ -7,7 +21,7 @@ const findOpenedNodeWithBiggestMax = (lineToLookAt, closedNodesAtLine) => {
   // Iterate line.
   for (let i = 0; i < lineToLookAt.length; i += 1) {
     // Check only opened nodes
-    if (closedNodesAtLine[i] === 0) {
+    if (closedNodesAtLine[i] === null) {
       // If node max distance is bigger than local max, use it as of now.
       if (localMax === null || lineToLookAt[i] > localMax) {
         localMax = lineToLookAt[i];
@@ -26,8 +40,8 @@ const closeNode = (nodeIndex, currentLine, closed) => {
 const shouldCloseLine = (currentLine, closed) => {
   let result = true;
 
-  for (let i = 0; i < currentLine; i += 1) {
-    if (closed[currentLine][i] === 0) {
+  for (let i = 0; i <= currentLine; i += 1) {
+    if (closed[currentLine][i] === null) {
       result = false;
     }
   }
@@ -40,18 +54,34 @@ const updateDistanceOfChildren = (currentLine, fatherIndex, maxDistance, triangl
     return null;
   }
 
-  // Since it is a triangle, alwasy two children
+  // Since it is a triangle, always two children
   const fatherMax = maxDistance[currentLine][fatherIndex];
 
-  // Left child
-  const leftNewCalc = fatherMax + triangle[currentLine + 1][fatherIndex];
-  if (leftNewCalc > maxDistance[currentLine + 1][fatherIndex]) {
+  // >>>>>LEFT CHILD.
+  const left = triangle[currentLine + 1][fatherIndex];
+  validateNode(left);
+  const leftNewCalc = fatherMax + left;
+
+  /*
+   * Nullcheck is because the arrays are null inititialized,
+   * they cannot be 0 because we support negative number
+   */
+  if (maxDistance[currentLine + 1][fatherIndex] === null ||
+    leftNewCalc > maxDistance[currentLine + 1][fatherIndex]) {
       maxDistance[currentLine + 1][fatherIndex] = leftNewCalc;
   }
 
-  // Right child.
+  // >>>>>RIGHT CHILD.
+  const right = triangle[currentLine + 1][fatherIndex + 1];
+  validateNode(right);
   const rightNewCalc = fatherMax + triangle[currentLine + 1][fatherIndex + 1];
-  if (rightNewCalc > maxDistance[currentLine + 1][fatherIndex + 1]) {
+
+  /*
+   * Nullcheck is because the arrays are null inititialized,
+   * they cannot be 0 because we support negative number
+   */
+  if (maxDistance[currentLine + 1][fatherIndex + 1] === null ||
+    rightNewCalc > maxDistance[currentLine + 1][fatherIndex + 1]) {
       maxDistance[currentLine + 1][fatherIndex + 1] = rightNewCalc;
   }
 
@@ -61,6 +91,20 @@ const updateDistanceOfChildren = (currentLine, fatherIndex, maxDistance, triangl
 const calculate = (triangle = []) => {
   if (triangle.length === 0) {
     return 0;
+  }
+
+  /*
+   * The reason I do not check every triangle element before executing any code
+   * is that in the average scenario, it is expected that all elements are numeric,
+   * by checking every single one of them before, I would increase the complexity
+   * for the average case.
+   */
+  validateLine(triangle[0], 1);
+  validateNode(triangle[0][0]);
+
+  // If it is a triangle with a single element, just return it.
+  if (triangle.length === 1) {
+    return triangle[0][0];
   }
 
   // Auxiliary data structures.
@@ -98,6 +142,7 @@ const calculate = (triangle = []) => {
 
       // If the line is completely calculated.
       if (shouldCloseLine(currentLine, closed)) {
+        validateLine(triangle[currentLine], currentLine + 1);
         if (currentLine < triangle.length - 1) {
           currentLine += 1;
         }
